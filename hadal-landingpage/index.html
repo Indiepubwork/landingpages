@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HADAL – Sinkflug in Jupiters Hölle. Ein klaustrophobisches Hard-Science-Fiction-Kammerspiel von Kurt Nolan.">
+    <meta name="author" content="Kurt Nolan">
+    <title>HADAL – Sinkflug in Jupiters Hölle | Kurt Nolan</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="HADAL – Sinkflug in Jupiters Hölle">
+    <meta property="og:description" content="Vier Männer. Eine Kapsel. Keine Garantie, wieder aufzusteigen.">
+    <meta property="og:image" content="img/hadal_cover.jpg">
+    <meta property="og:type" content="book">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Nebel/Partikel Canvas -->
+    <canvas id="nebula-canvas" aria-hidden="true"></canvas>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="title">HADAL</h1>
+                <p class="subtitle">Sinkflug in Jupiters Hölle</p>
+                <p class="tagline">»Vier Männer. Eine Kapsel. Keine Garantie, wieder aufzusteigen.«</p>
+                <a href="#pitch" class="scroll-indicator" aria-label="Nach unten scrollen">
+                    <span class="scroll-arrow"></span>
+                </a>
+            </div>
+            <div class="hero-cover">
+                <img src="img/hadal_cover.jpg" alt="HADAL Buchcover – Eine Titankapsel sinkt in die orangefarbene Atmosphäre des Jupiter" class="cover-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Pitch Section -->
+    <section class="pitch" id="pitch">
+        <div class="container">
+            <p class="pitch-text">
+                Jahr 2105. Im Orbit des Jupiter beginnt ein Extremexperiment, das nur für wenige gebaut wurde: Die <strong>HADAL</strong>, eine Titankapsel von drei Metern Durchmesser, entwickelt für eine kontrollierte Absenkung in die Atmosphäre eines Gasriesen. Vier Sitze. Kein Ausstieg. Kein Rettungssystem.
+            </p>
+        </div>
+    </section>
+
+    <!-- Crew Section -->
+    <section class="crew" id="crew">
+        <div class="container">
+            <h2 class="section-title">Die Crew</h2>
+            <div class="crew-grid">
+                <article class="crew-card">
+                    <div class="crew-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                    </div>
+                    <h3 class="crew-name">Ethan Newstead</h3>
+                    <p class="crew-role">Der Ingenieur</p>
+                </article>
+                <article class="crew-card">
+                    <div class="crew-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                    </div>
+                    <h3 class="crew-name">James Seldon</h3>
+                    <p class="crew-role">Der Wissenschaftler</p>
+                </article>
+                <article class="crew-card">
+                    <div class="crew-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3 class="crew-name">Victor Hawthorne</h3>
+                    <p class="crew-role">Der Milliardär</p>
+                </article>
+                <article class="crew-card">
+                    <div class="crew-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M23 7l-7 5 7 5V7z"/>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="crew-name">Marco Zanetti</h3>
+                    <p class="crew-role">Der Livestreamer</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission" id="mission">
+        <div class="container">
+            <h2 class="section-title">Die Mission</h2>
+            <div class="mission-content">
+                <p class="mission-highlight">
+                    Ihr Ziel: eine Tiefe, die noch kein Mensch erreicht hat.
+                </p>
+                <p>
+                    Acht Stunden unten. Dann der Aufstieg. Das ist der Plan.
+                </p>
+                <p>
+                    Doch unter ihnen wartet eine Welt, die keinen Boden besitzt. Mit zunehmender Tiefe steigen Druck, Temperatur und Dunkelheit. Kommunikation wird instabil. Die Physik wird zum einzigen Gesetz. Und zum Gegner.
+                </p>
+                <p>
+                    Drinnen sitzen vier Männer, die wussten, dass die Mission riskant ist – und dennoch eingestiegen sind. Nun teilen sie denselben Raum, dieselbe Stille, dieselbe Frage:
+                </p>
+                <p class="mission-question">
+                    Wie tief kann man sinken, bevor etwas in einem nachgibt?
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Genre Section -->
+    <section class="genre" id="genre">
+        <div class="container">
+            <blockquote class="genre-quote">
+                Ein klaustrophobisches Hard-Science-Fiction-Kammerspiel über Isolation, Grenzen und den Moment, in dem Menschlichkeit auf Physik trifft.
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="kaufen">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-price">
+                    <span class="price-value">2,99 €</span>
+                    <span class="price-hint">Auch in Kindle Unlimited</span>
+                </div>
+                <a href="https://www.amazon.de/dp/B0GDYFLGBY" class="cta-button" target="_blank" rel="noopener noreferrer">
+                    Jetzt bei Amazon kaufen
+                    <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Kurt Nolan</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
