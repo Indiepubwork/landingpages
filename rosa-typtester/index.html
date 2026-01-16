@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welches Rosa passt zu dir? Finde es heraus mit dem ultimativen Rosa-Typtester!">
+    <title>Welches Rosa passt zu mir? | Der ultimative Rosa-Typtester</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Welches Rosa passt zu mir?">
+    <meta property="og:description" content="Bist du eher Hot Pink Drama Queen oder doch Millennial Pink Influencer? Finde es heraus!">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" aria-hidden="true"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="sparkle sparkle-1">✨</div>
+            <div class="sparkle sparkle-2">💖</div>
+            <div class="sparkle sparkle-3">✨</div>
+            <h1 class="title">Welches Rosa passt zu mir?</h1>
+            <p class="subtitle">Der einzige Persönlichkeitstest, der wirklich wichtig ist</p>
+            <p class="tagline">Beantworte 7 knallharte Fragen und finde dein Seelen-Rosa!</p>
+            <button class="start-button" id="startQuiz">
+                <span>💕 Los geht's, Barbie! 💕</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section" id="quiz">
+        <div class="quiz-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+                <span class="progress-text" id="progressText">Frage 1 von 7</span>
+            </div>
+
+            <div class="question-card" id="questionCard">
+                <h2 class="question-text" id="questionText"></h2>
+                <div class="answers" id="answers"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Section -->
+    <section class="result-section" id="result">
+        <div class="result-container">
+            <div class="result-card" id="resultCard">
+                <div class="result-emoji" id="resultEmoji"></div>
+                <h2 class="result-title" id="resultTitle"></h2>
+                <div class="result-color" id="resultColor"></div>
+                <p class="result-description" id="resultDescription"></p>
+                <div class="result-traits" id="resultTraits"></div>
+                <div class="result-celebrity" id="resultCelebrity"></div>
+                <button class="restart-button" id="restartQuiz">
+                    <span>🔄 Nochmal! Vielleicht bin ich doch ein anderes Rosa!</span>
+                </button>
+                <button class="share-button" id="shareResult">
+                    <span>📱 Teilen & alle neidisch machen</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Made with 💗 and way too much Rosé-Wein</p>
+            <p class="disclaimer">Dieser Test ist zu 100% wissenschaftlich ungenau und trotzdem absolut richtig.</p>
+        </div>
+    </footer>
+
+    <script src="js/quiz.js"></script>
+</body>
+</html>
