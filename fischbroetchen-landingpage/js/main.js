@@ -111,7 +111,7 @@
     if (!reducedMotion) loop();
 
     /* ---- SCROLL: fade-in sections ---- */
-    const fadeEls = document.querySelectorAll('.story, .drama, .quote, .vibes, .cta');
+    const fadeEls = document.querySelectorAll('.story, .drama, .quote, .rosa-tester, .vibes, .cta');
     fadeEls.forEach(el => el.classList.add('fade-in'));
 
     const io = new IntersectionObserver((entries) => {

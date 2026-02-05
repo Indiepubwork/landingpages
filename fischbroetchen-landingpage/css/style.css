@@ -307,6 +307,63 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ============================
+   ROSATESTER
+   ============================ */
+.rosa-tester {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--pink-hot), #ff2d87, #ff5ca1);
+}
+
+.rosa-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rosa-link:active {
+    transform: scale(0.97);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.rosa-emoji {
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.rosa-text {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.2;
+}
+
+.rosa-sub {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* ============================
    VIBE TAGS
    ============================ */
 .vibes {
