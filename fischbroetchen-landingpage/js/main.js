@@ -1,204 +1,156 @@
 /**
- * Fischbrötchen am Valentinstag – Floating Hearts & Rose Petals
- * Animated canvas background with hearts and soft petal particles.
+ * Fischbrötchen am Valentinstag – FRECH edition
+ * Glowing blobs, floating hearts, scroll-triggered animations, sticky CTA
  */
 (function () {
     'use strict';
 
-    const CONFIG = {
-        heartCount: 25,
-        petalCount: 30,
-        colors: {
-            hearts: [
-                'rgba(232, 54, 109, 0.15)',
-                'rgba(255, 107, 157, 0.12)',
-                'rgba(255, 77, 125, 0.1)',
-                'rgba(164, 19, 60, 0.1)',
-                'rgba(255, 133, 161, 0.12)'
-            ],
-            petals: [
-                'rgba(255, 182, 203, 0.2)',
-                'rgba(255, 143, 171, 0.15)',
-                'rgba(255, 214, 224, 0.2)',
-                'rgba(255, 179, 198, 0.18)',
-                'rgba(248, 200, 220, 0.15)'
-            ]
-        },
-        speedFactor: 0.25
-    };
-
-    let canvas, ctx;
+    /* ---- CANVAS: hot pink blobs + hearts ---- */
+    const canvas = document.getElementById('bg');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    let blobs = [];
     let hearts = [];
-    let petals = [];
-    let animationId;
-    let isVisible = true;
+    let raf;
+    let visible = true;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+
+    class Blob {
+        constructor() {
+            this.x = Math.random() * W;
+            this.y = Math.random() * H;
+            this.r = Math.random() * 200 + 120;
+            this.dx = (Math.random() - 0.5) * 0.4;
+            this.dy = (Math.random() - 0.5) * 0.4;
+            const hues = [330, 340, 350, 345, 335];
+            const hue = hues[Math.floor(Math.random() * hues.length)];
+            this.color = `hsla(${hue}, 100%, ${55 + Math.random() * 20}%, ${0.06 + Math.random() * 0.06})`;
+        }
+        update() {
+            this.x += this.dx;
+            this.y += this.dy;
+            if (this.x < -this.r) this.x = W + this.r;
+            if (this.x > W + this.r) this.x = -this.r;
+            if (this.y < -this.r) this.y = H + this.r;
+            if (this.y > H + this.r) this.y = -this.r;
+        }
+        draw() {
+            const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+            g.addColorStop(0, this.color);
+            g.addColorStop(1, 'transparent');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
 
     class Heart {
-        constructor() {
-            this.reset(true);
+        constructor(init) {
+            this.reset(init);
         }
-
-        reset(initial) {
-            this.x = Math.random() * (canvas ? canvas.width : window.innerWidth);
-            this.y = initial
-                ? Math.random() * (canvas ? canvas.height : window.innerHeight)
-                : (canvas ? canvas.height : window.innerHeight) + 20;
-            this.size = Math.random() * 14 + 8;
-            this.speedY = -(Math.random() * 0.4 + 0.15) * CONFIG.speedFactor;
-            this.speedX = (Math.random() - 0.5) * 0.3 * CONFIG.speedFactor;
-            this.opacity = Math.random() * 0.4 + 0.1;
-            this.rotation = Math.random() * Math.PI * 2;
-            this.rotationSpeed = (Math.random() - 0.5) * 0.01;
-            this.color = CONFIG.colors.hearts[Math.floor(Math.random() * CONFIG.colors.hearts.length)];
-            this.wobble = Math.random() * Math.PI * 2;
-            this.wobbleSpeed = Math.random() * 0.02 + 0.005;
+        reset(init) {
+            this.x = Math.random() * W;
+            this.y = init ? Math.random() * H : H + 30;
+            this.s = Math.random() * 16 + 6;
+            this.vy = -(Math.random() * 0.6 + 0.2);
+            this.vx = (Math.random() - 0.5) * 0.25;
+            this.a = Math.random() * 0.2 + 0.05;
+            this.rot = Math.random() * Math.PI * 2;
+            this.rv = (Math.random() - 0.5) * 0.015;
+            this.w = Math.random() * Math.PI * 2;
         }
-
         update() {
-            this.wobble += this.wobbleSpeed;
-            this.x += this.speedX + Math.sin(this.wobble) * 0.3;
-            this.y += this.speedY;
-            this.rotation += this.rotationSpeed;
-
-            if (this.y < -30) {
-                this.reset(false);
-            }
+            this.w += 0.015;
+            this.x += this.vx + Math.sin(this.w) * 0.4;
+            this.y += this.vy;
+            this.rot += this.rv;
+            if (this.y < -40) this.reset(false);
         }
-
         draw() {
             ctx.save();
             ctx.translate(this.x, this.y);
-            ctx.rotate(this.rotation);
-            ctx.globalAlpha = this.opacity;
-            ctx.fillStyle = this.color;
+            ctx.rotate(this.rot);
+            ctx.globalAlpha = this.a;
+            ctx.fillStyle = `hsla(${340 + Math.random() * 20}, 100%, 60%, 1)`;
             ctx.beginPath();
-
-            const s = this.size;
+            const s = this.s;
             ctx.moveTo(0, s * 0.3);
-            ctx.bezierCurveTo(-s * 0.5, -s * 0.3, -s, s * 0.1, 0, s);
-            ctx.bezierCurveTo(s, s * 0.1, s * 0.5, -s * 0.3, 0, s * 0.3);
-
+            ctx.bezierCurveTo(-s * 0.5, -s * 0.3, -s, s * 0.15, 0, s);
+            ctx.bezierCurveTo(s, s * 0.15, s * 0.5, -s * 0.3, 0, s * 0.3);
             ctx.fill();
             ctx.restore();
         }
-    }
-
-    class Petal {
-        constructor() {
-            this.reset(true);
-        }
-
-        reset(initial) {
-            this.x = Math.random() * (canvas ? canvas.width : window.innerWidth);
-            this.y = initial
-                ? Math.random() * (canvas ? canvas.height : window.innerHeight)
-                : -10;
-            this.size = Math.random() * 6 + 3;
-            this.speedY = (Math.random() * 0.5 + 0.2) * CONFIG.speedFactor;
-            this.speedX = (Math.random() - 0.5) * 0.4 * CONFIG.speedFactor;
-            this.opacity = Math.random() * 0.3 + 0.1;
-            this.rotation = Math.random() * Math.PI * 2;
-            this.rotationSpeed = (Math.random() - 0.5) * 0.02;
-            this.color = CONFIG.colors.petals[Math.floor(Math.random() * CONFIG.colors.petals.length)];
-            this.wobble = Math.random() * Math.PI * 2;
-            this.wobbleSpeed = Math.random() * 0.03 + 0.01;
-            this.scaleX = Math.random() * 0.5 + 0.5;
-        }
-
-        update() {
-            this.wobble += this.wobbleSpeed;
-            this.x += this.speedX + Math.sin(this.wobble) * 0.5;
-            this.y += this.speedY;
-            this.rotation += this.rotationSpeed;
-
-            if (this.y > (canvas ? canvas.height : window.innerHeight) + 20) {
-                this.reset(false);
-            }
-        }
-
-        draw() {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(this.rotation);
-            ctx.scale(this.scaleX, 1);
-            ctx.globalAlpha = this.opacity;
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.ellipse(0, 0, this.size, this.size * 1.6, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        }
-    }
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
     }
 
     function initParticles() {
-        const scale = Math.min(window.innerWidth * window.innerHeight / (1920 * 1080), 1);
-        const heartCount = Math.max(8, Math.floor(CONFIG.heartCount * scale));
-        const petalCount = Math.max(12, Math.floor(CONFIG.petalCount * scale));
-
+        blobs = [];
         hearts = [];
-        petals = [];
-
-        for (let i = 0; i < heartCount; i++) {
-            hearts.push(new Heart());
-        }
-        for (let i = 0; i < petalCount; i++) {
-            petals.push(new Petal());
-        }
+        for (let i = 0; i < 5; i++) blobs.push(new Blob());
+        for (let i = 0; i < 18; i++) hearts.push(new Heart(true));
     }
 
-    function animate() {
-        if (!isVisible) {
-            animationId = requestAnimationFrame(animate);
-            return;
-        }
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        petals.forEach(p => {
-            p.update();
-            p.draw();
-        });
-
-        hearts.forEach(h => {
-            h.update();
-            h.draw();
-        });
-
-        animationId = requestAnimationFrame(animate);
+    function loop() {
+        if (!visible) { raf = requestAnimationFrame(loop); return; }
+        ctx.clearRect(0, 0, W, H);
+        blobs.forEach(b => { b.update(); b.draw(); });
+        hearts.forEach(h => { h.update(); h.draw(); });
+        raf = requestAnimationFrame(loop);
     }
 
-    function init() {
-        canvas = document.getElementById('hearts-canvas');
-        if (!canvas) return;
+    resize();
+    initParticles();
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+    document.addEventListener('visibilitychange', () => { visible = !document.hidden; });
+    if (!reducedMotion) loop();
 
-        ctx = canvas.getContext('2d');
-        resizeCanvas();
-        initParticles();
+    /* ---- SCROLL: fade-in sections ---- */
+    const fadeEls = document.querySelectorAll('.story, .drama, .quote, .vibes, .cta');
+    fadeEls.forEach(el => el.classList.add('fade-in'));
 
-        window.addEventListener('resize', function () {
-            resizeCanvas();
-            initParticles();
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                io.unobserve(e.target);
+            }
         });
+    }, { threshold: 0.15 });
+    fadeEls.forEach(el => io.observe(el));
 
-        document.addEventListener('visibilitychange', function () {
-            isVisible = !document.hidden;
-        });
-
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            return;
-        }
-
-        animate();
+    /* ---- STICKY BUY BUTTON ---- */
+    const sticky = document.querySelector('.sticky-buy');
+    if (sticky) {
+        const heroEnd = document.querySelector('.hero');
+        const stickyIO = new IntersectionObserver(([entry]) => {
+            sticky.classList.toggle('visible', !entry.isIntersecting);
+        }, { threshold: 0 });
+        stickyIO.observe(heroEnd);
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+    /* ---- DRAMA CARDS: stagger entrance ---- */
+    const cards = document.querySelectorAll('.drama-card');
+    const cardIO = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                e.target.style.transitionDelay = `${i * 100}ms`;
+                e.target.style.opacity = '1';
+                e.target.style.transform = 'translateX(0)';
+                cardIO.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    cards.forEach((c, i) => {
+        c.style.opacity = '0';
+        c.style.transform = i % 2 === 0 ? 'translateX(-30px)' : 'translateX(30px)';
+        c.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        cardIO.observe(c);
+    });
+
 })();
